@@ -1,8 +1,7 @@
 body {
-    margin-top: 20px;
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - 20px);
+    min-height: 100vh;
     background-color: #f2f3f4;
 }
 
@@ -15,10 +14,11 @@ body > footer {
 
 .container {
   max-width: 1400px;
+  margin-top: 80px;
 }
 
-h1 {
-    margin: 0;
+h1, h2, h3 {
+    margin-top: 0;
 }
 
 h1 > img {
@@ -26,6 +26,16 @@ h1 > img {
     height: 80px;
     vertical-align: bottom;
     border: none;
+}
+
+nav {
+    padding-left: 60px;
+    background: #333 url(/static/img/cronorc.png) 20px 5px no-repeat;
+    background-size: 45px;
+}
+
+nav a, nav a:visited {
+  color: #fff;
 }
 
 /* Forms */
