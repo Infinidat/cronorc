@@ -1,0 +1,29 @@
+body {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 20px);
+    background-color: #f2f3f4;
+}
+
+body > footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 20px 0;
+  opacity: 0.5;
+}
+
+.container {
+  max-width: 1400px;
+}
+
+h1 {
+    margin: 0;
+}
+
+h1 > img {
+    display: inline-block;
+    height: 80px;
+    vertical-align: bottom;
+    border: none;
+}

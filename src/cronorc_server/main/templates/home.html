@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load humanize %}
+
+{% block content %}
+
+    <h1>
+        <img src="/static/img/cronorc.png">
+        Cronorc
+    </h1>
+
+    <h3>Recent Executions</h3>
+
+    <table class="table-hover">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Host</th>
+                <th>Command</th>
+                <th>Elapsed</th>
+                <th>Status</th>
+        </thead>
+        <tbody>
+            {% for e in executions %}
+                <tr>
+                    <td>{{ e.start|date:"SHORT_DATETIME_FORMAT" }}</td>
+                    <td>{{ e.job.hostname }}</td>
+                    <td>{{ e.job.command }}</td>
+                    <td>{{ e.elapsed|intcomma }}ms</td>
+                    {% if e.success %}
+                        <td>success</td>
+                    {% else %}
+                        <td class="text-danger">failure</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
