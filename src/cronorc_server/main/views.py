@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.views.decorators.http import require_POST
 from django.http import HttpResponse
+from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 
 import json
 
@@ -27,6 +28,7 @@ def notify_view(request):
     return HttpResponse('{}', content_type='application/json')
 
 
+@login_required
 def home_view(request):
     executions = Execution.objects.order_by('-id')
     return render(request, 'home.html', locals())

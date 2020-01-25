@@ -168,3 +168,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.normpath(os.path.join(BASE_DIR, 'cronorc_server', 'static')),
 ]
+
+
+LOGIN_URL = '/login/'
+LOGOUT_REDIRECT_URL = '/'

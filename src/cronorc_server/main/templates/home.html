@@ -24,7 +24,7 @@
             {% for e in executions %}
                 <tr>
                     <td>{{ e.start|date:"SHORT_DATETIME_FORMAT" }}</td>
-                    <td>{{ e.job.hostname }}</td>
+                    <td>{{ e.job.hostname }} [{{ e.job.ip }}]</td>
                     <td>{{ e.job.command }}</td>
                     <td>{{ e.elapsed|intcomma }}ms</td>
                     {% if e.success %}

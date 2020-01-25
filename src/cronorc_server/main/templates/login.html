@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% load humanize %}
+
+{% block content %}
+
+    <h1>
+        <img src="/static/img/cronorc.png">
+        Cronorc
+    </h1>
+
+    <h3>Login Required</h3>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-success">Continue</button>
+    </form>
+
+{% endblock %}

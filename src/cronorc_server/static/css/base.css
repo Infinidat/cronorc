@@ -27,3 +27,14 @@ h1 > img {
     vertical-align: bottom;
     border: none;
 }
+
+/* Forms */
+
+.errorlist.nonfield {
+    background: #f0cbc9;
+    padding: 20px;
+    border-bottom-left-radius: 25px 115px;
+    border-bottom-right-radius: 155px 25px;
+    border-top-left-radius: 15px 225px;
+    border-top-right-radius: 25px 150px;
+}
