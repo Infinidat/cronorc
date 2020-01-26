@@ -48,3 +48,25 @@ nav a, nav a:visited {
     border-top-left-radius: 15px 225px;
     border-top-right-radius: 25px 150px;
 }
+
+/* Statuses */
+
+.status-failed {
+    color: #a7342d;
+}
+
+.status-delayed, .status-flapping {
+    color: #ddcd45;
+}
+
+.badge.ok {
+    background-color: #86a361;
+}
+
+.badge.failed {
+    background-color: #a7342d;
+}
+
+.badge.delayed, .badge.flapping {
+    background-color: #ddcd45;
+}

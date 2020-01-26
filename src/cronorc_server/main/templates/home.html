@@ -4,6 +4,35 @@
 
 {% block content %}
 
+    <h3>Jobs</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Host</th>
+                <th>Command</th>
+                <th>Last Run</th>
+                <th>Status</th>
+        </thead>
+        <tbody>
+            {% for job in jobs %}
+                <tr>
+                    <td><a href="{% url 'job' job.id %}">{{ job.id }}</a></td>
+                    <td>{{ job.hostname }} [{{ job.ip }}]</td>
+                    <td>{{ job.command|truncatechars:60 }}</td>
+                    <td>
+                        {{ job.last_notification|date:"SHORT_DATETIME_FORMAT" }}
+                        <span class="text-muted">({{job.last_notification|timesince }} ago)</span>
+                    </td>
+                    <td class="status-{{ job.status|lower }}">{{ job.status }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% comment %}
+
     <h3>Recent Executions</h3>
 
     <table class="table-hover">
@@ -12,8 +41,8 @@
                 <th>Date</th>
                 <th>Host</th>
                 <th>Command</th>
+                <th>Result</th>
                 <th>Elapsed</th>
-                <th>Status</th>
         </thead>
         <tbody>
             {% for e in executions %}
@@ -21,15 +50,17 @@
                     <td>{{ e.start|date:"SHORT_DATETIME_FORMAT" }}</td>
                     <td>{{ e.job.hostname }} [{{ e.job.ip }}]</td>
                     <td>{{ e.job.command }}</td>
-                    <td>{{ e.elapsed|intcomma }}ms</td>
                     {% if e.success %}
                         <td>success</td>
                     {% else %}
                         <td class="text-danger">failure</td>
                     {% endif %}
+                    <td>{{ e.elapsed|intcomma }}ms</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    {% endcomment %}
 
 {% endblock %}

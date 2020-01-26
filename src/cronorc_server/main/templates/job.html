@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load humanize %}
+
+{% block content %}
+
+    <h3>
+        Job #{{ id }}
+        on {{ job.hostname }} [{{ job.ip }}]
+        <span class="badge {{ job.status|lower }}">{{ job.status }}</span>
+    </h3>
+
+    <pre><code>{{ job.command }}</code></pre>
+
+    <h4>Recent Executions</h4>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Result</th>
+                <th>Elapsed</th>
+        </thead>
+        <tbody>
+            {% for e in executions %}
+                <tr>
+                    <td>
+                        {{ e.notification|date:"SHORT_DATETIME_FORMAT" }}
+                        <span class="text-muted">({{ e.notification|timesince }} ago)</span>
+                    </td>
+                    {% if e.success %}
+                        <td>OK</td>
+                    {% else %}
+                        <td class="text-danger">FAILED</td>
+                    {% endif %}
+                    <td>{{ e.elapsed|intcomma }}ms</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
