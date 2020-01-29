@@ -33,7 +33,7 @@ func main() {
 	args := os.Args[2:]
 	cmd := exec.Command(prog, args...)
 	start := time.Now()
-	cmd.CombinedOutput()
+	cmd.Run()
 	end := time.Now()
 	hostname, _ := os.Hostname()
 	m := Message{
@@ -72,6 +72,7 @@ func sendMessage(message Message) {
 	if url == "" {
 		log.Fatal("The CRONORC_URL environment variable is missing")
 	}
+	url = strings.TrimRight(url, "/") + "/notify/"
 	data, json_err := json.Marshal(message)
 	if json_err != nil {
 		log.Fatal(json_err)

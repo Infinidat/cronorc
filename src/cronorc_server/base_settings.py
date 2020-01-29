@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from . import PROJECTROOT
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -165,6 +166,7 @@ SHORT_DATETIME_FORMAT = 'Y-m-d H:i'
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.normpath(os.path.join(PROJECTROOT, 'parts', 'collected_static'))
 STATICFILES_DIRS = [
     os.path.normpath(os.path.join(BASE_DIR, 'cronorc_server', 'static')),
 ]

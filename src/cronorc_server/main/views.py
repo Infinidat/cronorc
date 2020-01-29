@@ -45,5 +45,5 @@ def home_view(request):
 @login_required
 def job_view(request, id):
     job = get_object_or_404(Job, id=id)
-    executions = job.execution_set.order_by('-id')
+    executions = job.execution_set.order_by('-id')[:50]
     return render(request, 'job.html', locals())
