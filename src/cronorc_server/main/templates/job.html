@@ -2,6 +2,16 @@
 
 {% load humanize %}
 
+{% block extra_head %}
+    <style>
+        .paper-btn {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
 
     <h3>
@@ -10,7 +20,10 @@
         <span class="badge {{ job.status|lower }}">{{ job.status }}</span>
     </h3>
 
+    <a href="{% url 'edit_job' id %}" class="paper-btn btn-small">Edit</a>
+
     <pre><code>{{ job.command }}</code></pre>
+
 
     <h4>Recent Executions</h4>
 

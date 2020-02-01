@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>
+        Edit Job
+    </h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-success">Save</button>
+        <a href="{% url 'job' id %}" class="paper-btn">Cancel</a>
+    </form>
+
+{% endblock %}

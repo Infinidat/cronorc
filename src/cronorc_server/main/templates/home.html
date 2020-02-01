@@ -28,7 +28,7 @@
                 <tr>
                     <td><a href="{% url 'job' job.id %}">{{ job.id }}</a></td>
                     <td>{{ job.hostname }} [{{ job.ip }}]</td>
-                    <td>{{ job.command|truncatechars:60 }}</td>
+                    <td>{{ job.get_display_name|truncatechars:60 }}</td>
                     <td>
                         {{ job.last_notification|date:"SHORT_DATETIME_FORMAT" }}
                         <span class="text-muted">({{job.last_notification|timesince }} ago)</span>

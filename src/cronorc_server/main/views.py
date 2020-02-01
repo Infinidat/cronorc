@@ -1,9 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django import forms
 
 import json
 
@@ -47,3 +48,20 @@ def job_view(request, id):
     job = get_object_or_404(Job, id=id)
     executions = job.execution_set.order_by('-id')[:50]
     return render(request, 'job.html', locals())
+
+
+@login_required
+def edit_job_view(request, id):
+    job = get_object_or_404(Job, id=id)
+    form = JobForm(request.POST or None, instance=job)
+    if form.is_valid():
+        job.save()
+        return redirect(job.get_absolute_url())
+    return render(request, 'edit_job.html', locals())
+
+
+class JobForm(forms.ModelForm):
+
+    class Meta:
+        model = Job
+        fields = ('display_name',)
