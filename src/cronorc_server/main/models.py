@@ -4,6 +4,7 @@ from django.conf import settings
 from django.urls import reverse
 
 from djchoices import DjangoChoices, ChoiceItem
+from urllib.parse import urljoin
 
 
 class JobStatus(DjangoChoices):
@@ -56,9 +57,10 @@ class Job(models.Model):
         return self.status
 
     def send_alert(self, old_status, new_status):
+        url = urljoin(settings.CRONORC_URL, self.get_absolute_url())
         send_mail(
             f'Cronjob {new_status} - {self}',
-            f'Status changed from {old_status} to {new_status}.',
+            f'Status changed from {old_status} to {new_status}.\n\n{url}',
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=settings.ALERT_RECIPIENTS
         )
