@@ -4,7 +4,7 @@
 
 {% block extra_head %}
     <style>
-        .paper-btn {
+        #edit {
             position: absolute;
             top: 40px;
             right: 40px;
@@ -20,7 +20,7 @@
         <span class="badge {{ job.status|lower }}">{{ job.status }}</span>
     </h3>
 
-    <a href="{% url 'edit_job' id %}" class="paper-btn btn-small">Edit</a>
+    <a href="{% url 'edit_job' id %}" id="edit" class="paper-btn btn-small">Edit</a>
 
     <pre><code>{{ job.command }}</code></pre>
 
@@ -28,29 +28,52 @@
 
     <h4>Recent Executions</h4>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Result</th>
-                <th>Elapsed</th>
-        </thead>
-        <tbody>
-            {% for e in executions %}
+    <div id="table-container">
+        <table>
+            <thead>
                 <tr>
-                    <td>
-                        {{ e.notification|date:"SHORT_DATETIME_FORMAT" }}
-                        <span class="text-muted">({{ e.notification|timesince }} ago)</span>
-                    </td>
-                    {% if e.success %}
-                        <td>OK</td>
-                    {% else %}
-                        <td class="text-danger">FAILED</td>
-                    {% endif %}
-                    <td>{{ e.elapsed|intcomma }}ms</td>
+                    <th>Date</th>
+                    <th>Result</th>
+                    <th>Elapsed</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for e in executions %}
+                    <tr>
+                        <td>
+                            {{ e.notification|date:"SHORT_DATETIME_FORMAT" }}
+                            <span class="text-muted">({{ e.notification|timesince }} ago)</span>
+                        </td>
+                        {% if e.success %}
+                            <td>OK</td>
+                        {% else %}
+                            <td class="text-danger">FAILED</td>
+                        {% endif %}
+                        <td>{{ e.elapsed|intcomma }}ms</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+
+    <a href="#" id="load-more" class="paper-btn" {% if not has_more %}disabled{% endif %}>Load older entries</a>
+
+    <script>
+        // A rudimentary mechanism for reloading the table with more lines
+        var n = {{ n }};
+        $('#load-more').on('click', function(e) {
+            e.preventDefault();
+            var curr = $('tbody tr').length;
+            n += 50;
+            $('#table-container').load(`./?n=${n} table`, function() {
+                console.log($('tbody tr').length, curr)
+                if ($('tbody tr').length == curr) {
+                    $('#load-more').attr('disabled', true);
+                }
+            });
+        });
+    </script>
 
 {% endblock %}

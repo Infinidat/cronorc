@@ -46,7 +46,9 @@ def home_view(request):
 @login_required
 def job_view(request, id):
     job = get_object_or_404(Job, id=id)
-    executions = job.execution_set.order_by('-id')[:50]
+    n = int(request.GET.get('n', '50'))
+    executions = job.execution_set.order_by('-id')[:n]
+    has_more = job.execution_set.count() > n
     return render(request, 'job.html', locals())
 
 
