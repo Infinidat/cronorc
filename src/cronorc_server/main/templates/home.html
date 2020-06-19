@@ -4,6 +4,12 @@
 
 {% block extra_head %}
     <style>
+        #search {
+             text-align: right;
+        }
+        #search input {
+            display: inline;
+        }
         tbody tr {
             cursor: pointer;
         }
@@ -12,7 +18,19 @@
 
 {% block content %}
 
-    <h3>Jobs</h3>
+    <div class="row flex-right">
+        <div class="sm-8 col">
+            <h3>Jobs</h3>
+        </div>
+        <div id="search" class="sm-4 col">
+            <form method="get" action=".">
+                <input name="q" value="{{ q }}">
+                <button type="submit" class="btn-secondary">Search</button>
+            </form>
+        </div>
+    </div>
+
+
 
     <table class="table-hover">
         <thead>

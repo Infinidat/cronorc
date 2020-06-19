@@ -173,7 +173,7 @@ STATICFILES_DIRS = [
 
 
 LOGIN_URL = '/login/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = LOGOUT_REDIRECT_URL = '/'
 
 # Old records deletion criteria
 MAX_DAYS_TO_KEEP = 365

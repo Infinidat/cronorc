@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django import forms
+from django.db.models import Q
 
 import json
 
@@ -40,6 +41,9 @@ def notify_view(request):
 def home_view(request):
     executions = Execution.objects.order_by('-id')
     jobs = Job.objects.order_by('-last_execution')
+    q = request.GET.get('q', '')
+    if q:
+        jobs = jobs.filter(Q(hostname__icontains=q) | Q(ip__icontains=q) | Q(command__icontains=q) | Q(display_name__icontains=q))
     return render(request, 'home.html', locals())
 
 
