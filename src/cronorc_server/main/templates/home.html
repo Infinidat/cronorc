@@ -4,12 +4,6 @@
 
 {% block extra_head %}
     <style>
-        #search {
-             text-align: right;
-        }
-        #search input {
-            display: inline;
-        }
         tbody tr {
             cursor: pointer;
         }
@@ -22,49 +16,9 @@
         <div class="sm-8 col">
             <h3>Jobs</h3>
         </div>
-        <div id="search" class="sm-4 col">
-            <form method="get" action=".">
-                <input name="q" value="{{ q }}">
-                <button type="submit" class="btn-secondary">Search</button>
-            </form>
-        </div>
+        {% include "search_form.html" %}
     </div>
 
-
-
-    <table class="table-hover">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Host</th>
-                <th>Command</th>
-                <th>Last Run</th>
-                <th>Status</th>
-        </thead>
-        <tbody>
-            {% for job in jobs %}
-                <tr>
-                    <td><a href="{% url 'job' job.id %}">{{ job.id }}</a></td>
-                    <td>{{ job.hostname }} [{{ job.ip }}]</td>
-                    <td>{{ job.get_display_name|truncatechars:60 }}</td>
-                    <td>
-                        {{ job.last_notification|date:"SHORT_DATETIME_FORMAT" }}
-                        <span class="text-muted">({{job.last_notification|timesince }} ago)</span>
-                    </td>
-                    <td><span class="badge {{ job.status|lower }}">{{ job.status }}</span></td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <script>
-        $('tbody').on('click', function(event) {
-            console.log(event.target.tagName)
-            if (event.target.tagName != 'A') {
-                var tr = $(event.target).closest('tr');
-                window.location.href = tr.find('a').attr('href');
-            }
-        });
-    </script>
+    {% include "jobs_table.html" %}
 
 {% endblock %}

@@ -28,6 +28,14 @@ h1 > img {
     border: none;
 }
 
+.col > h3 {
+    margin-left: -0.5rem;
+}
+
+h3 > a {
+    font: inherit;
+}
+
 nav {
     padding-left: 60px;
     background: #333 url(/static/img/cronorc.png) 20px 5px no-repeat;
@@ -36,6 +44,21 @@ nav {
 
 nav a, nav a:visited {
   color: #fff;
+}
+
+a {
+    color: #41403e;
+    text-decoration: none;
+}
+
+/* Clickable tables */
+
+.table-clickable tbody {
+    cursor: pointer;
+}
+
+.table-clickable tbody tr:hover {
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* Forms */
@@ -69,4 +92,14 @@ nav a, nav a:visited {
 
 .badge.delayed, .badge.flapping {
     background-color: #ddcd45;
+}
+
+/* Search */
+
+#search {
+     text-align: right;
+}
+
+#search input {
+    display: inline;
 }

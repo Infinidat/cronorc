@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% load humanize %}
+
+{% block extra_head %}
+    <style>
+        tbody tr {
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row flex-right">
+        <div class="sm-8 col">
+            <h3>Hosts</h3>
+        </div>
+        {% include "search_form.html" %}
+    </div>
+
+    <table class="table-clickable">
+        <thead>
+            <tr>
+                <th>Hostname</th>
+                <th>IP Address</th>
+                <th>Jobs</th>
+                <th>Last Run</th>
+        </thead>
+        <tbody>
+            {% for host in hosts %}
+                <tr>
+                    <td><a href="{% url 'host' host.id %}">{{ host.hostname }}</a></td>
+                    <td>{{ host.ip }}</td>
+                    <td>{{ host.job_count }}</td>
+                    <td>
+                        {{ host.last_notification|date:"SHORT_DATETIME_FORMAT" }}
+                        <span class="text-muted">({{host.last_notification|timesince }} ago)</span>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -9,7 +9,7 @@ from django.db.models import Q
 
 import json
 
-from .models import Job, Execution
+from .models import Job, Execution, Host
 
 
 @require_POST
@@ -50,6 +50,7 @@ def home_view(request):
 @login_required
 def job_view(request, id):
     job = get_object_or_404(Job, id=id)
+    host = job.get_host()
     n = int(request.GET.get('n', '50'))
     executions = job.execution_set.order_by('-id')[:n]
     has_more = job.execution_set.count() > n
@@ -64,6 +65,22 @@ def edit_job_view(request, id):
         job.save()
         return redirect(job.get_absolute_url())
     return render(request, 'edit_job.html', locals())
+
+
+@login_required
+def hosts_view(request):
+    hosts = Host.objects.order_by('hostname', 'ip')
+    q = request.GET.get('q', '')
+    if q:
+        hosts = hosts.filter(Q(hostname__icontains=q) | Q(ip__icontains=q))
+    return render(request, 'hosts.html', locals())
+
+
+@login_required
+def host_view(request, id):
+    host = get_object_or_404(Host, id=id)
+    jobs = host.get_jobs()
+    return render(request, 'host.html', locals())
 
 
 class JobForm(forms.ModelForm):

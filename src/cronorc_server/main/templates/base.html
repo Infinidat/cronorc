@@ -9,13 +9,14 @@
   <link rel="stylesheet" href="/static/css/base.css">
   <link rel="icon" type="image/png" href="/static/img/cronorc.png">
   <script src="/static/js/jquery.js"></script>
+  <script src="/static/js/common.js"></script>
   {% block extra_head %}
   {% endblock %}
 </head>
 <body>
 
   {% block navbar %}
-    <nav class="shadow shadow-small fixed split-nav">
+    <nav class="shadow shadow-small fixed">
       <div class="nav-brand">
         <h4><a href="/">Cronorc</a></h4>
       </div>
@@ -30,6 +31,8 @@
         </button>
         <div class="collapsible-body">
           <ul class="inline">
+            <li><a href="{% url 'home' %}">Jobs</a></li>
+            <li><a href="{% url 'hosts' %}">Hosts</a></li>
             <li><a href="{% url 'logout' %}">Logout</a></li>
           </ul>
         </div>

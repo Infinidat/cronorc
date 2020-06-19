@@ -4,6 +4,7 @@ from django.conf import settings
 from django.urls import reverse
 
 from djchoices import DjangoChoices, ChoiceItem
+from django_db_views.db_view import DBView
 from urllib.parse import urljoin
 
 
@@ -98,6 +99,9 @@ class Job(models.Model):
             return _format(self.period // 60, 'hour')
         return _format(self.period, 'minute')
 
+    def get_host(self):
+        return Host.objects.get(hostname=self.hostname, ip=self.ip)
+
 
 class Execution(models.Model):
 
@@ -109,3 +113,38 @@ class Execution(models.Model):
 
     def success(self):
         return self.exit_code == 0
+
+
+class Host(models.Model):
+
+    id                = models.BigIntegerField(primary_key=True)
+    hostname          = models.CharField(max_length=255, db_index=True)
+    ip                = models.GenericIPAddressField()
+    last_execution    = models.DateTimeField(null=True)
+    last_notification = models.DateTimeField(null=True)
+    job_count         = models.PositiveIntegerField()
+
+    VIEW_DEFINITION = """
+        CREATE VIEW main_host AS
+        SELECT min(rowid) AS id,
+               hostname,
+               ip,
+               max(last_execution) AS last_execution,
+               max(last_notification) AS last_notification,
+               count() AS job_count
+        FROM main_job
+        GROUP BY hostname, ip
+    """
+
+    class Meta:
+        managed = False
+        db_table = 'main_host'
+
+    def save(self, *args, **kwargs):
+         raise PermissionDenied('Host model is read only')
+
+    def delete(self, *args, **kwargs):
+         raise PermissionDenied('Host model is read only')
+
+    def get_jobs(self):
+        return Job.objects.filter(hostname=self.hostname, ip=self.ip).order_by('-last_execution')

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h3>{{ host.hostname }} [{{ host.ip }}]</h3>
+
+    <h4>Jobs</h4>
+
+    {% include "jobs_table.html" %}
+
+{% endblock %}

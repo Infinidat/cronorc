@@ -16,7 +16,7 @@
 
     <h3>
         Job #{{ id }}
-        on {{ job.hostname }} [{{ job.ip }}]
+        on <a href="{% url 'host' host.id %}">{{ host.hostname }} [{{ host.ip }}]</a>
         <span class="badge {{ job.status|lower }}">{{ job.status }}</span>
     </h3>
 
