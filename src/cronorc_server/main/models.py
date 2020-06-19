@@ -4,7 +4,6 @@ from django.conf import settings
 from django.urls import reverse
 
 from djchoices import DjangoChoices, ChoiceItem
-from django_db_views.db_view import DBView
 from urllib.parse import urljoin
 
 
