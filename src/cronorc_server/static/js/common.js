@@ -8,4 +8,7 @@ $(function() {
         }
     });
 
+    // Autofocus on search
+    $('#search input').focus().select();
+
 });
